@@ -43,8 +43,6 @@ export function Dashboard() {
 
         requestGetForecast(location)
     }
-
-
     const mergeArrayHours = (hoursToday, hoursTomorrow) => {
         if (!hoursToday || !hoursTomorrow) {
             return []
@@ -52,18 +50,17 @@ export function Dashboard() {
 
         return hoursToday.concat(hoursTomorrow)
     }
-
+    
     useEffect(() => {
         handleGetForecast()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
+    
     useEffect(() => {
         if (!location || location.length === 0) {
             return
         }
-
-        requestGetForecast(location)
+          requestGetForecast(location)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
@@ -73,19 +70,19 @@ export function Dashboard() {
                 <LottieFile animationData={lottieCloud} height="100%" width="100%" />
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems:'center', flexDirection: 'column', marginTop: 2, fontSize: '25px', fontWeight: 700 }}>
-              <LocationSelect/>
-            </Box>
-
-            <CurrentWeatherCard
-                condition={response?.current?.condition?.text ?? ''}
-                currentTemp={response.current?.temp_c ?? 0}
-                icon={response.current?.condition?.icon ?? ''}
-                max={response?.forecast?.forecastday[0]?.day.maxtemp_c ?? 0}
-                min={response?.forecast?.forecastday[0]?.day.mintemp_c ?? 0}
-            />
-
             <Box className={styles.boxCards}>
+                <Box className={styles.locationSelectContainer}>
+                    <LocationSelect/>
+                </Box>
+
+                <CurrentWeatherCard
+                    condition={response?.current?.condition?.text ?? ''}
+                    currentTemp={response.current?.temp_c ?? 0}
+                    icon={response.current?.condition?.icon ?? ''}
+                    max={response?.forecast?.forecastday[0]?.day.maxtemp_c ?? 0}
+                    min={response?.forecast?.forecastday[0]?.day.mintemp_c ?? 0}
+                />
+
                 <TimeForecast
                     hours={mergeArrayHours(response?.forecast?.forecastday[0]?.hour, response?.forecast?.forecastday[1]?.hour)}
                 />
