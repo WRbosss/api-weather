@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl } from '@mui/material';
 import { useRequestCompleteLocation } from '../../hooks/Request/useRequestCompleteLocation';
 import { LocationContext } from '../../contexts/LocationContext'
@@ -49,7 +51,10 @@ export default function LocationSelect() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>{location}</Button>
+      <IconButton onClick={handleClickOpen} color="primary" aria-label="select location" sx={{borderRadius:2}}>
+        <AddIcon fontSize="large" />
+      </IconButton>
+      
 
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle>Search your location:</DialogTitle>
