@@ -73,26 +73,33 @@ export function Dashboard() {
                 <LottieFile animationData={lottieCloud} height="100%" width="100%" />
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems:'center', flexDirection: 'column', marginTop: 2, fontSize: '25px', fontWeight: 700 }}>
-              <LocationSelect/>
-            </Box>
-
-            <CurrentWeatherCard
-                condition={response?.current?.condition?.text ?? ''}
-                currentTemp={response.current?.temp_c ?? 0}
-                icon={response.current?.condition?.icon ?? ''}
-                max={response?.forecast?.forecastday[0]?.day.maxtemp_c ?? 0}
-                min={response?.forecast?.forecastday[0]?.day.mintemp_c ?? 0}
-            />
-
             <Box className={styles.boxCards}>
+
+                <Box sx={{position: 'relative',width: '100%', marginTop: 2,height: '50px'}}>
+                    <Box sx={{position: 'absolute',left: 0,top: '50%',transform: 'translateY(-50%)',fontSize: '25px',fontWeight: 700 }}>
+                        <LocationSelect />
+                    </Box>
+                    <Box sx={{display: 'flex',justifyContent: 'center',alignItems: 'center',height: '100%',fontSize: '25px',fontWeight: 700 }}>
+                        {/* adicionar carrosel */}
+                    </Box>
+                </Box>
+
+                <CurrentWeatherCard
+                    condition={response?.current?.condition?.text ?? ''}
+                    currentTemp={response.current?.temp_c ?? 0}
+                    icon={response.current?.condition?.icon ?? ''}
+                    max={response?.forecast?.forecastday[0]?.day.maxtemp_c ?? 0}
+                    min={response?.forecast?.forecastday[0]?.day.mintemp_c ?? 0}
+                />
+
+
                 <TimeForecast
                     hours={mergeArrayHours(response?.forecast?.forecastday[0]?.hour, response?.forecast?.forecastday[1]?.hour)}
                 />
 
                 <DaysForecast days={response?.forecast?.forecastday} />
                 <Box display='flex'>
-                   
+
                 </Box>
             </Box>
         </Box>
