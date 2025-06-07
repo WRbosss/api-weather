@@ -12,7 +12,7 @@ export default function LocationSelect() {
   const [open, setOpen] = useState(false);
   const { getCompleteLocation } = useRequestCompleteLocation()
   const { location, setLocation } = useContext(LocationContext)
-
+  const [selectedOption, setSelectedOption] = useState(null);
   const [completes, setCompletes] = useState([])
   const [text, setText] = useState('')
 
@@ -31,30 +31,40 @@ export default function LocationSelect() {
   }
 
   const handleConfirmLocation = () => {
-    setLocation(text)
-    setOpen(false)
-  }
+    if (!selectedOption) return;
+
+    const formatted = selectedOption.formatted;
+    const savedLocations = JSON.parse(localStorage.getItem('savedLocations')) || [];
+
+    if (!savedLocations.includes(formatted)) {
+      const updatedLocations = [...savedLocations, formatted];
+      localStorage.setItem('savedLocations', JSON.stringify(updatedLocations));
+    }
+
+    setLocation(formatted);
+    setOpen(false);
+  };
 
   useEffect(() => {
-      if (!text || text.length === 0) {
-        setCompletes([])
-        return
-      }
+    if (!text || text.length === 0) {
+      setCompletes([])
+      return
+    }
 
-      getCompleteLocation(text).then((response) => {
-        const data = response?.data?.results
+    getCompleteLocation(text).then((response) => {
+      const data = response?.data?.results
 
-        setCompletes(data)
-      })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+      setCompletes(data)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text])
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen} color="primary" aria-label="select location" sx={{borderRadius:2}}>
+      <IconButton onClick={handleClickOpen} color="primary" aria-label="select location" sx={{ borderRadius: 2 }}>
         <AddIcon fontSize="large" />
       </IconButton>
-      
+
 
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle>Search your location:</DialogTitle>
@@ -62,22 +72,25 @@ export default function LocationSelect() {
           <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
               <Autocomplete
-                id="country-select-demo"
+                id="city-autocomplete"
                 sx={{ width: 300 }}
                 options={completes}
                 autoHighlight
-                getOptionLabel={(complete) => complete.formatted}
-                renderOption={(props, complete) => (
-                  <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                    {complete.formatted}
+                getOptionLabel={(option) => option.formatted || ''}
+                onChange={(event, newValue) => {
+                  setSelectedOption(newValue);
+                  setText(newValue?.formatted || '');
+                }}
+                renderOption={(props, option) => (
+                  <Box component="li" {...props}>
+                    {option.formatted}
                   </Box>
                 )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     label="Search here"
-                    onChange={e => handleChange(e.target.value)}
-                    value={text}
+                    onChange={(e) => handleChange(e.target.value)}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: 'new-password', // disable autocomplete and autofill
