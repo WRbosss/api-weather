@@ -12,6 +12,7 @@ import { LottieFile } from '../LottieFile'
 import lottieCloud from '../../assets/lotties/cloud.json'
 import LocationSelect from '../LocationSelect'
 import { LocationContext } from '../../contexts/LocationContext';
+import { LocationCarousel } from '../LocationCarousel'
 
 export function Dashboard() {
     const { getForecast } = useRequestForecast()
@@ -30,6 +31,12 @@ export function Dashboard() {
         const currentLocation = (position) => {
             getGeoLocation(position.coords.latitude, position.coords.longitude).then(response => {
                 const city = response?.data?.features[0].properties.city
+                const saved = JSON.parse(localStorage.getItem('savedLocations')) || [];
+                const normalizedSaved = saved.map(item => item.toLowerCase());
+                if (!normalizedSaved.includes(city.toLowerCase())) {
+                    saved.push(city);
+                    localStorage.setItem('savedLocations', JSON.stringify(saved));
+                }
 
                 setLocation(city)
                 requestGetForecast(city)
@@ -74,13 +81,12 @@ export function Dashboard() {
             </Box>
 
             <Box className={styles.boxCards}>
-
-                <Box sx={{position: 'relative',width: '100%', marginTop: 2,height: '50px'}}>
-                    <Box sx={{position: 'absolute',left: 0,top: '50%',transform: 'translateY(-50%)',fontSize: '25px',fontWeight: 700 }}>
+                <Box sx={{ position: 'relative', width: '100%', marginTop: 2, height: '50px' }}>
+                    <Box sx={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', fontSize: '25px', fontWeight: 700 }}>
                         <LocationSelect />
                     </Box>
-                    <Box sx={{display: 'flex',justifyContent: 'center',alignItems: 'center',height: '100%',fontSize: '25px',fontWeight: 700 }}>
-                        {/* adicionar carrosel */}
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '75%', fontSize: '25px', fontWeight: 700 }}>
+                        <LocationCarousel />
                     </Box>
                 </Box>
 
@@ -98,9 +104,7 @@ export function Dashboard() {
                 />
 
                 <DaysForecast days={response?.forecast?.forecastday} />
-                <Box display='flex'>
 
-                </Box>
             </Box>
         </Box>
     )
