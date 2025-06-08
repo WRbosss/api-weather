@@ -30,11 +30,16 @@ export function Dashboard() {
     const handleGetForecast = () => {
         const currentLocation = (position) => {
             getGeoLocation(position.coords.latitude, position.coords.longitude).then(response => {
-                const city = response?.data?.features[0].properties.city
+                const props = response?.data?.features[0]?.properties;
+                if (!props) return;
+                const city = props.city || '';
+                const state = props.county_code || '';
+                const country = props.country || '';
+                const fullLocation = `${city}, ${state}, ${country}`;
+
                 const saved = JSON.parse(localStorage.getItem('savedLocations')) || [];
-                const normalizedSaved = saved.map(item => item.toLowerCase());
-                if (!normalizedSaved.includes(city.toLowerCase())) {
-                    saved.push(city);
+                if (!saved.includes(fullLocation)) {
+                    saved.push(fullLocation);
                     localStorage.setItem('savedLocations', JSON.stringify(saved));
                 }
 
