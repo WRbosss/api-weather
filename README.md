@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Link website: https://ajweatherapi.netlify.app/
+Link website: https://wrbosss.github.io/api-weather/
 
 ## Environment Setup
 
