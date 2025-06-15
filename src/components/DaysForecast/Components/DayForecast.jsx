@@ -2,13 +2,14 @@ import React from "react"
 import PropTypes from 'prop-types'
 import { Box } from '@mui/material'
 import styles from '../styles.module.css'
+import { DateTime } from 'luxon'
 
-const DAYS_OF_THE_WEEK = ['Saturday','Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+const DAYS_OF_THE_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 export function DayForecast({ date, icon, minTemp, maxTemp, chanceOfRain }) {
-    const dateForecast = new Date(date)
-    const dayOfTheWeek = dateForecast.getUTCDay()
-    const dayOfMonth = dateForecast.getDate()
+    const dateForecast = DateTime.fromISO(date, { zone: "America/Sao_Paulo" })
+    const dayOfTheWeek = dateForecast.weekday % 7
+    const dayOfMonth = dateForecast.day
 
     const currentDate = new Date()
     const currentDay = currentDate.getDate()
