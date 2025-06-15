@@ -14,7 +14,7 @@ export default function LocationSelect() {
   const [open, setOpen] = useState(false);
   const [openSavedLocations, setOpenSavedLocations] = useState(false);
   const { getCompleteLocation } = useRequestCompleteLocation()
-  const { location, setLocation } = useContext(LocationContext)
+  const { setLocation } = useContext(LocationContext)
   const [selectedOption, setSelectedOption] = useState(null);
   const [completes, setCompletes] = useState([])
   const [text, setText] = useState('')
