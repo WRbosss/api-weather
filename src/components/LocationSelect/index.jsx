@@ -66,7 +66,7 @@ export default function LocationSelect() {
   useEffect(() => {
     const locations = JSON.parse(localStorage.getItem('savedLocations')) || [];
     setSavedLocations(locations);
-  }, [open]);
+  }, [openSavedLocations]);
 
   const handleDeleteLocation = (locationToDelete) => {
     const updatedLocations = savedLocations.filter(loc => loc !== locationToDelete);
