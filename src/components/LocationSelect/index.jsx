@@ -160,7 +160,7 @@ export default function LocationSelect() {
           }
         }}
       >
-        <DialogTitle sx={{ pb: 1 }}>Localizações Salvas</DialogTitle>
+        <DialogTitle sx={{ pb: 1 }}>Saved locations</DialogTitle>
         <DialogContent sx={{ p: 2 }}>
           {savedLocations.length > 0 ? (
             <List sx={{ py: 0 }}>
@@ -189,7 +189,7 @@ export default function LocationSelect() {
             </List>
           ) : (
             <Typography variant="body2" sx={{ textAlign: 'center', py: 1 }}>
-              Nenhuma localização salva
+              No saved locations.
             </Typography>
           )}
         </DialogContent>
