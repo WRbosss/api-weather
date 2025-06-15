@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, List, ListItem, ListItemText, ListItemSecondaryAction, Typography, Divider } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, List, ListItem, ListItemText, ListItemSecondaryAction, Typography } from '@mui/material';
 import { useRequestCompleteLocation } from '../../hooks/Request/useRequestCompleteLocation';
 import { LocationContext } from '../../contexts/LocationContext'
 
@@ -14,7 +14,7 @@ export default function LocationSelect() {
   const [open, setOpen] = useState(false);
   const [openSavedLocations, setOpenSavedLocations] = useState(false);
   const { getCompleteLocation } = useRequestCompleteLocation()
-  const { setLocation } = useContext(LocationContext)
+  const { location, setLocation } = useContext(LocationContext)
   const [selectedOption, setSelectedOption] = useState(null);
   const [completes, setCompletes] = useState([])
   const [text, setText] = useState('')
