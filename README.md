@@ -4,6 +4,36 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Link website: https://ajweatherapi.netlify.app/
 
+## Environment Setup
+
+This project requires API keys for weather and geolocation services. 
+
+### Local Development
+
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edit `.env` and add your API keys:
+   ```
+   REACT_APP_WEATHER_API_KEY=your_weather_api_key_here
+   REACT_APP_GEO_API_KEY=your_geo_api_key_here
+   ```
+
+### API Keys Required
+
+- **Weather API**: Get your free API key from [WeatherAPI.com](https://www.weatherapi.com/)
+- **Geo API**: Get your free API key from [Geoapify.com](https://www.geoapify.com/)
+
+### GitHub Deployment
+
+If deploying via GitHub Actions, add these secrets to your repository:
+1. Go to Settings > Secrets and variables > Actions
+2. Add the following repository secrets:
+   - `REACT_APP_WEATHER_API_KEY`
+   - `REACT_APP_GEO_API_KEY`
+
 ## Available Scripts
 
 In the project directory, you can run:
